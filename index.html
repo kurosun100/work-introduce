@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたに最適な副業診断</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+        body { font-family: 'Noto Sans JP', sans-serif; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-2">副業診断システム</h1>
+            <p class="text-xl opacity-90">あなたに最適な副業を見つけましょう</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- 質問フォーム -->
+        <div id="questionForm" class="max-w-2xl mx-auto bg-white rounded-lg card-shadow p-8">
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-sm font-medium text-gray-500">質問 <span id="currentQuestion">1</span> / 6</span>
+                    <div class="w-32 bg-gray-200 rounded-full h-2">
+                        <div id="progressBar" class="bg-blue-500 h-2 rounded-full transition-all duration-300" style="width: 16.67%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="question1" class="question-slide">
+                <h2 class="text-2xl font-semibold mb-6">あなたのスキルレベルは？</h2>
+                <div class="space-y-3">
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="skillLevel" value="beginner" class="mr-3">
+                        <div>
+                            <div class="font-medium">初心者</div>
+                            <div class="text-sm text-gray-600">新しいことを学ぶのが好き</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="skillLevel" value="intermediate" class="mr-3">
+                        <div>
+                            <div class="font-medium">中級者</div>
+                            <div class="text-sm text-gray-600">基本的なスキルはある</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="skillLevel" value="advanced" class="mr-3">
+                        <div>
+                            <div class="font-medium">上級者</div>
+                            <div class="text-sm text-gray-600">専門的な知識・経験がある</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div id="question2" class="question-slide hidden">
+                <h2 class="text-2xl font-semibold mb-6">1日にどのくらい時間を使えますか？</h2>
+                <div class="space-y-3">
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="timeAvailable" value="1hour" class="mr-3">
+                        <div>
+                            <div class="font-medium">1時間未満</div>
+                            <div class="text-sm text-gray-600">スキマ時間を有効活用</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="timeAvailable" value="2-3hours" class="mr-3">
+                        <div>
+                            <div class="font-medium">2-3時間</div>
+                            <div class="text-sm text-gray-600">平日の夜や週末に作業</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="timeAvailable" value="4hours+" class="mr-3">
+                        <div>
+                            <div class="font-medium">4時間以上</div>
+                            <div class="text-sm text-gray-600">しっかりと時間を確保できる</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div id="question3" class="question-slide hidden">
+                <h2 class="text-2xl font-semibold mb-6">興味のある分野は？</h2>
+                <div class="space-y-3">
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="interest" value="it" class="mr-3">
+                        <div>
+                            <div class="font-medium">IT・プログラミング</div>
+                            <div class="text-sm text-gray-600">Webサイト制作、アプリ開発など</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="interest" value="design" class="mr-3">
+                        <div>
+                            <div class="font-medium">デザイン・クリエイティブ</div>
+                            <div class="text-sm text-gray-600">ロゴ制作、動画編集など</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="interest" value="writing" class="mr-3">
+                        <div>
+                            <div class="font-medium">ライティング・コンテンツ</div>
+                            <div class="text-sm text-gray-600">記事執筆、ブログなど</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="interest" value="business" class="mr-3">
+                        <div>
+                            <div class="font-medium">ビジネス・販売</div>
+                            <div class="text-sm text-gray-600">物販、コンサルティングなど</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div id="question4" class="question-slide hidden">
+                <h2 class="text-2xl font-semibold mb-6">月の収入目標は？</h2>
+                <div class="space-y-3">
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="income" value="low" class="mr-3">
+                        <div>
+                            <div class="font-medium">1-5万円</div>
+                            <div class="text-sm text-gray-600">お小遣い程度の収入</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="income" value="medium" class="mr-3">
+                        <div>
+                            <div class="font-medium">5-15万円</div>
+                            <div class="text-sm text-gray-600">生活の足しになる収入</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="income" value="high" class="mr-3">
+                        <div>
+                            <div class="font-medium">15万円以上</div>
+                            <div class="text-sm text-gray-600">本格的な収入を目指す</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div id="question5" class="question-slide hidden">
+                <h2 class="text-2xl font-semibold mb-6">働く場所の希望は？</h2>
+                <div class="space-y-3">
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="location" value="home" class="mr-3">
+                        <div>
+                            <div class="font-medium">在宅中心</div>
+                            <div class="text-sm text-gray-600">自宅で完結する仕事</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="location" value="flexible" class="mr-3">
+                        <div>
+                            <div class="font-medium">どちらでも</div>
+                            <div class="text-sm text-gray-600">在宅・外出問わない</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="location" value="outside" class="mr-3">
+                        <div>
+                            <div class="font-medium">外出中心</div>
+                            <div class="text-sm text-gray-600">人と会ったり外で活動</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div id="question6" class="question-slide hidden">
+                <h2 class="text-2xl font-semibold mb-6">どのような働き方を希望しますか？</h2>
+                <div class="space-y-3">
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="workStyle" value="flexible" class="mr-3">
+                        <div>
+                            <div class="font-medium">自分のペース</div>
+                            <div class="text-sm text-gray-600">時間や場所に縛られない</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="workStyle" value="structured" class="mr-3">
+                        <div>
+                            <div class="font-medium">決まった時間</div>
+                            <div class="text-sm text-gray-600">スケジュールが決まっている</div>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="workStyle" value="project" class="mr-3">
+                        <div>
+                            <div class="font-medium">プロジェクト単位</div>
+                            <div class="text-sm text-gray-600">案件ごとに集中して取り組む</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex justify-between mt-8">
+                <button id="prevBtn" class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors hidden">前へ</button>
+                <button id="nextBtn" class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors ml-auto">次へ</button>
+                <button id="submitBtn" class="px-8 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors ml-auto hidden">診断結果を見る</button>
+            </div>
+        </div>
+
+        <!-- 結果表示 -->
+        <div id="resultSection" class="max-w-4xl mx-auto hidden">
+            <div class="bg-white rounded-lg card-shadow p-8 mb-6">
+                <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">あなたにおすすめの副業</h2>
+                <div id="recommendedJobs" class="space-y-6">
+                    <!-- 結果がここに表示されます -->
+                </div>
+            </div>
+            <div class="text-center">
+                <button id="restartBtn" class="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">もう一度診断する</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 副業データベース
+        const jobDatabase = {
+            webDeveloper: {
+                title: "Webサイト制作",
+                description: "企業や個人のWebサイトを制作する仕事。HTML、CSS、JavaScriptなどの技術を使用。",
+                income: "月5-30万円",
+                timeRequired: "週10-20時間",
+                difficulty: "中級〜上級",
+                url: "https://example.com/web-development-info"
+            },
+            dataEntry: {
+                title: "データ入力・事務作業",
+                description: "Excel入力、資料作成、データ整理などの事務作業。初心者でも始めやすい。",
+                income: "月1-8万円",
+                timeRequired: "週5-15時間",
+                difficulty: "初級",
+                url: "https://example.com/data-entry-info"
+            },
+            contentWriting: {
+                title: "記事ライティング",
+                description: "ブログ記事、商品説明、SEO記事などの文章作成。文章力を活かせる。",
+                income: "月3-20万円",
+                timeRequired: "週8-25時間",
+                difficulty: "初級〜中級",
+                url: "https://example.com/content-writing-info"
+            },
+            graphicDesign: {
+                title: "グラフィックデザイン",
+                description: "ロゴ、バナー、チラシなどのデザイン制作。デザインスキルが必要。",
+                income: "月5-25万円",
+                timeRequired: "週10-20時間",
+                difficulty: "中級〜上級",
+                url: "https://example.com/graphic-design-info"
+            },
+            onlineTutoring: {
+                title: "オンライン講師",
+                description: "オンラインで語学や専門スキルを教える。知識を活かして収入を得られる。",
+                income: "月8-30万円",
+                timeRequired: "週8-20時間",
+                difficulty: "中級〜上級",
+                url: "https://example.com/online-tutoring-info"
+            },
+            consulting: {
+                title: "コンサルティング",
+                description: "専門知識を活かしてビジネスアドバイスを提供。高収入が期待できる。",
+                income: "月15-50万円",
+                timeRequired: "週10-25時間",
+                difficulty: "上級",
+                url: "https://example.com/consulting-info"
+            },
+            photography: {
+                title: "写真撮影・販売",
+                description: "写真撮影やストックフォトの販売。クリエイティブな仕事。",
+                income: "月3-15万円",
+                timeRequired: "週5-15時間",
+                difficulty: "初級〜中級",
+                url: "https://example.com/photography-info"
+            },
+            videoEditing: {
+                title: "動画編集",
+                description: "YouTube動画や企業PR動画の編集。動画スキルが求められる成長分野。",
+                income: "月8-40万円",
+                timeRequired: "週12-30時間",
+                difficulty: "中級〜上級",
+                url: "https://example.com/video-editing-info"
+            }
+        };
+
+        // 診断ロジック
+        function recommendJobs(answers) {
+            const recommendations = [];
+            
+            // スキルレベル・興味・時間・収入目標に基づいて判定
+            if (answers.interest === 'it') {
+                if (answers.skillLevel === 'advanced') {
+                    recommendations.push('webDeveloper', 'consulting');
+                } else if (answers.skillLevel === 'intermediate') {
+                    recommendations.push('webDeveloper', 'dataEntry');
+                } else {
+                    recommendations.push('dataEntry', 'contentWriting');
+                }
+            } else if (answers.interest === 'design') {
+                if (answers.skillLevel === 'advanced') {
+                    recommendations.push('graphicDesign', 'videoEditing');
+                } else {
+                    recommendations.push('photography', 'graphicDesign');
+                }
+            } else if (answers.interest === 'writing') {
+                recommendations.push('contentWriting', 'onlineTutoring');
+            } else if (answers.interest === 'business') {
+                if (answers.skillLevel === 'advanced') {
+                    recommendations.push('consulting', 'onlineTutoring');
+                } else {
+                    recommendations.push('dataEntry', 'contentWriting');
+                }
+            }
+
+            // 時間制約による調整
+            if (answers.timeAvailable === '1hour') {
+                recommendations.push('dataEntry', 'photography');
+            } else if (answers.timeAvailable === '4hours+') {
+                recommendations.push('webDeveloper', 'videoEditing');
+            }
+
+            // 収入目標による調整
+            if (answers.income === 'high') {
+                recommendations.push('consulting', 'webDeveloper', 'videoEditing');
+            }
+
+            // 重複を削除し、最大3つまでに制限
+            return [...new Set(recommendations)].slice(0, 3);
+        }
+
+        // UI制御
+        let currentQuestionIndex = 1;
+        const totalQuestions = 6;
+        const answers = {};
+
+        function updateProgress() {
+            const progress = (currentQuestionIndex / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex;
+        }
+
+        function showQuestion(index) {
+            // 全ての質問を非表示
+            for (let i = 1; i <= totalQuestions; i++) {
+                document.getElementById(`question${i}`).classList.add('hidden');
+            }
+            // 指定の質問を表示
+            document.getElementById(`question${index}`).classList.remove('hidden');
+            
+            // ボタンの表示/非表示制御
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            prevBtn.classList.toggle('hidden', index === 1);
+            
+            if (index === totalQuestions) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+        }
+
+        function displayResults() {
+            const recommendedJobKeys = recommendJobs(answers);
+            const resultsContainer = document.getElementById('recommendedJobs');
+            
+            resultsContainer.innerHTML = '';
+            
+            recommendedJobKeys.forEach((jobKey, index) => {
+                const job = jobDatabase[jobKey];
+                const jobElement = document.createElement('div');
+                jobElement.className = 'bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border-l-4 border-blue-500';
+                
+                jobElement.innerHTML = `
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">${index + 1}. ${job.title}</h3>
+                            <p class="text-gray-600 mb-4">${job.description}</p>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <span class="font-medium text-gray-700">収入目安:</span>
+                                    <span class="text-green-600">${job.income}</span>
+                                </div>
+                                <div>
+                                    <span class="font-medium text-gray-700">時間:</span>
+                                    <span class="text-blue-600">${job.timeRequired}</span>
+                                </div>
+                                <div>
+                                    <span class="font-medium text-gray-700">難易度:</span>
+                                    <span class="text-purple-600">${job.difficulty}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">詳細な情報と始め方を無料で確認:</span>
+                            <a href="${job.url}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                                無料で情報を取得する →
+                            </a>
+                        </div>
+                    </div>
+                `;
+                
+                resultsContainer.appendChild(jobElement);
+            });
+            
+            // フォームを非表示にして結果を表示
+            document.getElementById('questionForm').classList.add('hidden');
+            document.getElementById('resultSection').classList.remove('hidden');
+        }
+
+        // イベントリスナー
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            // 現在の質問の回答を保存
+            const currentQuestion = document.getElementById(`question${currentQuestionIndex}`);
+            const selectedOption = currentQuestion.querySelector('input[type="radio"]:checked');
+            
+            if (!selectedOption) {
+                alert('選択肢を選んでください。');
+                return;
+            }
+            
+            answers[selectedOption.name] = selectedOption.value;
+            
+            if (currentQuestionIndex < totalQuestions) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+                updateProgress();
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentQuestionIndex > 1) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+                updateProgress();
+            }
+        });
+
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            // 最後の質問の回答を保存
+            const currentQuestion = document.getElementById(`question${currentQuestionIndex}`);
+            const selectedOption = currentQuestion.querySelector('input[type="radio"]:checked');
+            
+            if (!selectedOption) {
+                alert('選択肢を選んでください。');
+                return;
+            }
+            
+            answers[selectedOption.name] = selectedOption.value;
+            displayResults();
+        });
+
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            // リセット
+            currentQuestionIndex = 1;
+            Object.keys(answers).forEach(key => delete answers[key]);
+            
+            // フォームをリセット
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.checked = false;
+            });
+            
+            // 表示を初期状態に戻す
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('questionForm').classList.remove('hidden');
+            showQuestion(1);
+            updateProgress();
+        });
+
+        // 初期化
+        showQuestion(1);
+        updateProgress();
+    </script>
+</body>
+</html>
