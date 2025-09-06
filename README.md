@@ -1,4 +1,4 @@
-# MNP回線管理ツール
+# 副業診断ツール
 
 ## ライセンス
 © 2025 kurosun100. All rights reserved.
