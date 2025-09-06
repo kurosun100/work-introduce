@@ -82,12 +82,27 @@
             background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
             border-left-color: #0ea5e9;
         }
+        /* カード内容のはみ出し防止 */
+        .job-card-it, .job-card-design, .job-card-writing, 
+        .job-card-business, .job-card-education, .job-card-consulting, .job-card-creative {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
 
         /* モバイルでの改行問題を解決 */
         @media (max-width: 640px) {
             .mobile-text-adjust {
                 word-break: keep-all;
                 overflow-wrap: break-word;
+                line-height: 1.6;
+            }
+        }
+        /* モバイルでのヘッダー非表示時の調整 */
+        @media (max-width: 768px) {
+            .mobile-header-hidden {
+                margin-top: 0 !important;
+                padding-top: 1rem;
             }
         }
     </style>
@@ -476,6 +491,12 @@
             }
             // 指定の質問を表示
             document.getElementById(`question${index}`).classList.remove('hidden');
+
+            // モバイルでヘッダーを非表示にしてスクロールを上部に戻す
+            if (window.innerWidth <= 768) {
+                document.querySelector('header').style.display = 'none';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
             
             // ボタンの表示/非表示制御
             const prevBtn = document.getElementById('prevBtn');
@@ -508,6 +529,10 @@
         }
 
         function displayResults() {
+            // ヘッダーを再表示
+            if (window.innerWidth <= 768) {
+                document.querySelector('header').style.display = 'block';
+            }
             const recommendedJobKeys = recommendJobs(answers);
             const resultsContainer = document.getElementById('recommendedJobs');
             
@@ -521,11 +546,11 @@
                 
                 jobElement.innerHTML = `
                     <div class="flex items-start justify-between">
-                        <div class="flex-1">
-                            <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-2 mobile-text-adjust">${index + 1}. ${job.title}</h3>
-                            <p class="text-gray-600 mb-4 text-sm md:text-base mobile-text-adjust">${job.description}</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 text-sm">
-                                <div class="mobile-text-adjust">
+                        <div class="flex-1  min-w-0">
+                            <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-2 mobile-text-adjust break-words">${index + 1}. ${job.title}</h3>
+                            <p class="text-gray-600 mb-4 text-sm md:text-base mobile-text-adjust break-words leading-relaxed">${job.description}</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 text-sm overflow-hidden">
+                                <div class="mobile-text-adjust min-w-0">
                                     <span class="font-medium text-gray-700">収入目安:</span>
                                     <span class="text-green-600">${job.income}</span>
                                 </div>
@@ -541,9 +566,9 @@
                         </div>
                     </div>
                     <div class="mt-4 pt-4 border-t border-gray-200">
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                            <span class="text-xs md:text-sm text-gray-600 mobile-text-adjust">詳細な情報と始め方を無料で確認:</span>
-                            <a href="${job.url}" target="_blank" class="bg-teal-500 hover:bg-teal-600 text-white px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm transition-colors text-center">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 min-w-0">
+                            <span class="text-xs md:text-sm text-gray-600 mobile-text-adjust break-words">詳細な情報と始め方を下記から確認:</span>
+                            <a href="${job.url}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm transition-colors text-center">
                                 無料で情報を取得する →
                             </a>
                         </div>
@@ -614,6 +639,10 @@
         });
 
         document.getElementById('restartBtn').addEventListener('click', () => {
+            // ヘッダーを再表示
+    if (window.innerWidth <= 768) {
+        document.querySelector('header').style.display = 'block';
+    }
             // リセット
             currentQuestionIndex = 1;
             Object.keys(answers).forEach(key => delete answers[key]);
