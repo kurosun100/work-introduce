@@ -102,6 +102,39 @@
     </header>
 
     <div class="container mx-auto px-4 py-6 md:py-8">
+        <!-- スタート画面 -->
+        <div id="startSection" class="max-w-2xl mx-auto bg-white rounded-lg card-shadow p-6 md:p-8 text-center">
+            <div class="mb-6">
+                <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                    </svg>
+                </div>
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 mobile-text-adjust">副業適性診断</h2>
+                <p class="text-gray-600 mb-6 text-sm md:text-base mobile-text-adjust">6つの簡単な質問に答えて、あなたに最適な副業を見つけましょう</p>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-4 mb-8 text-sm">
+                <div class="text-center">
+                    <div class="text-xl md:text-2xl font-bold text-teal-600">6</div>
+                    <div class="text-gray-600 text-xs md:text-sm">質問数</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-xl md:text-2xl font-bold text-teal-600">2分</div>
+                    <div class="text-gray-600 text-xs md:text-sm">所要時間</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-xl md:text-2xl font-bold text-teal-600">無料</div>
+                    <div class="text-gray-600 text-xs md:text-sm">診断料金</div>
+                </div>
+            </div>
+            
+            <button id="startDiagnosisBtn" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 md:py-4 px-6 md:px-8 rounded-lg transition-colors text-base md:text-lg mobile-text-adjust">
+                診断をスタート
+            </button>
+            
+            <p class="text-xs text-gray-500 mt-4 mobile-text-adjust">※個人情報の入力は不要です</p>
+        </div>
         <!-- 質問フォーム -->
         <div id="questionForm" class="max-w-2xl mx-auto bg-white rounded-lg card-shadow p-6 md:p-8">
             <div class="mb-6 md:mb-8">
@@ -613,8 +646,17 @@
         });
 
         // 初期化
-        showQuestion(1);
-        updateProgress();
+        // スタートボタンのイベントリスナー
+        document.getElementById('startDiagnosisBtn').addEventListener('click', () => {
+            document.getElementById('startSection').classList.add('hidden');
+            document.getElementById('questionForm').classList.remove('hidden');
+            showQuestion(1);
+            updateProgress();
+        });
+
+        // 初期化（スタート画面を表示）
+        document.getElementById('startSection').classList.remove('hidden');
+        document.getElementById('questionForm').classList.add('hidden');
     </script>
 </body>
 </html>
