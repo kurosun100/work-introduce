@@ -16,7 +16,7 @@ const jobDatabase = {
         income: "月5-50万円",
         timeRequired: "週10-25時間",
         difficulty: "初級～中級",
-        category: "ecommerce",
+        category: "business",
         url: "https://docs.google.com/forms/d/1Zc521Sz-o2xQ-Vy7jGXFWb9N_E5VB4BGo4A3PF4YSl0/edit",
         hasLineGuide: false
     },
@@ -26,7 +26,7 @@ const jobDatabase = {
         income: "月10-80万円",
         timeRequired: "週8-20時間",
         difficulty: "中級～上級",
-        category: "consulting",
+        category: "business",
         url: "https://example.com/life-planning-info",
         hasLineGuide: true,
         lineKeyword: "ライフプラン"
@@ -48,7 +48,7 @@ const jobDatabase = {
         income: "月5-40万円",
         timeRequired: "週8-25時間",
         difficulty: "初級～中級",
-        category: "marketing",
+        category: "lifestyle",
         url: "https://example.com/sns-management-info",
         hasLineGuide: true,
         lineKeyword: "SNS運用"
@@ -59,18 +59,18 @@ const jobDatabase = {
         income: "月3-30万円",
         timeRequired: "週5-20時間",
         difficulty: "初級～中級",
-        category: "marketing",
+        category: "lifestyle",
         url: "https://example.com/beauty-service-info",
         hasLineGuide: true,
         lineKeyword: "美容"
     },
     mnp: {
-        title: "MNP代行サービス",
+        title: "MNPサービス",
         description: "携帯電話の乗り換え手続きを代行。キャリア間の料金比較や最適プラン提案も含む。",
         income: "月5-25万円",
         timeRequired: "週10-20時間",
         difficulty: "初級",
-        category: "service",
+        category: "business",
         url: "https://example.com/mnp-service-info",
         hasLineGuide: true,
         lineKeyword: "MNP"
@@ -85,6 +85,17 @@ const jobDatabase = {
         url: "https://example.com/programming-info",
         hasLineGuide: true,
         lineKeyword: "プログラミング"
+    },
+    pointActivity: {
+    title: "ポイ活",
+    description: "ポイントサイトやアプリを活用してポイントを貯める活動。アンケート回答や商品購入でポイント獲得。",
+    income: "月1-5万円",
+    timeRequired: "週3-10時間",
+    difficulty: "初級",
+    category: "lifestyle",
+    url: "https://example.com/point-activity-info",
+    hasLineGuide: true,
+    lineKeyword: "ポイ活"
     }
 };
 
@@ -97,12 +108,6 @@ function recommendJobs(answers) {
         case 'investment':
             recommendations.push('fx');
             break;
-        case 'ecommerce':
-            recommendations.push('dropshipping');
-            break;
-        case 'consulting':
-            recommendations.push('lifePlanning');
-            break;
         case 'tech':
             if (answers.skillLevel === 'advanced') {
                 recommendations.push('programming', 'ai');
@@ -110,17 +115,17 @@ function recommendJobs(answers) {
                 recommendations.push('ai', 'programming');
             }
             break;
-        case 'marketing':
-            recommendations.push('snsManagement', 'beauty');
+        case 'business':
+            recommendations.push('lifePlanning', 'mnp', 'dropshipping');
             break;
-        case 'service':
-            recommendations.push('mnp');
+        case 'lifestyle':
+            recommendations.push('snsManagement', 'beauty', 'pointActivity');
             break;
     }
 
     // スキルレベルによる調整
     if (answers.skillLevel === 'beginner') {
-        recommendations.push('snsManagement', 'beauty', 'mnp');
+        recommendations.push('snsManagement', 'beauty', 'mnp', 'pointActivity');
     } else if (answers.skillLevel === 'intermediate') {
         recommendations.push('ai', 'dropshipping', 'lifePlanning');
     } else if (answers.skillLevel === 'advanced') {
@@ -131,7 +136,7 @@ function recommendJobs(answers) {
     if (answers.timeAvailable === '1hour') {
         recommendations.push('fx', 'beauty', 'mnp');
     } else if (answers.timeAvailable === '6hours+') {
-        recommendations.push('programming', 'ai', 'dropshipping');
+        recommendations.push('programming', 'ai', 'dropshipping', 'pointActivity');
     }
 
     // 収入目標による調整
@@ -197,11 +202,9 @@ function showQuestion(index) {
 function getJobCardClass(category) {
     const categoryClasses = {
         'investment': 'job-card-investment',
-        'ecommerce': 'job-card-ecommerce', 
-        'consulting': 'job-card-consulting',
-        'tech': 'job-card-tech',
-        'marketing': 'job-card-marketing',
-        'service': 'job-card-service'
+        'tech': 'job-card-tech', 
+        'business': 'job-card-business',
+        'lifestyle': 'job-card-lifestyle'
     };
     return categoryClasses[category] || 'job-card-tech';
 }
@@ -229,8 +232,9 @@ function displayResults() {
             // LINE案内がある場合：リンクボタンなし、LINE案内のみ
             bottomSectionHtml = `
                 <div class="mt-4 pt-4 border-t border-gray-200">
-                    <div class="space-y-3">
-                        <p class="text-xs md:text-sm text-gray-700">公式LINEで「${job.lineKeyword}」と入力してください</p>
+                    <div class="space-y-3 md:text-center">
+                        <p class="text-sm text-gray-700">
+                        公式LINEで「${job.lineKeyword}」と入力して<br class="sm:hidden">情報を取得する</p>
                         <div class="text-center">
                             <a href="https://line.me/R/ti/p/@example" target="_blank" class="inline-block bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">
                                 公式LINEはこちら
@@ -244,13 +248,14 @@ function displayResults() {
             bottomSectionHtml = `
                 <div class="mt-4 pt-4 border-t border-gray-200">
                     <div class="flex flex-col md:flex-row md:items-center gap-3">
-                        <span class="text-xs md:text-sm text-gray-600 mobile-text-adjust">
-                            <span class="md:hidden">詳細な情報と始め方を下記のボタンから確認</span>
-                            <span class="hidden md:inline">詳細な情報と始め方を右のボタンから確認:</span>
+                        <span class="text-sm text-gray-600 mobile-text-adjust">
+                            詳細な情報と始め方を下記のボタンから確認
                         </span>
-                        <a href="${job.url}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm transition-colors text-center md:text-left md:ml-auto">
-                            無料で情報を取得する
-                        </a>
+                        <div class="text-center">
+                            <a href="${job.url}" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-normal transition-colors shadow-sm hover:shadow-md">
+                                無料で情報を取得する
+                            </a>
+                        </div>
                     </div>
                 </div>
             `;
