@@ -2,13 +2,14 @@
 const jobDatabase = {
     fx: {
         title: "FX・暗号通貨投資",
-        description: "為替や暗号通貨の取引で利益を目指す投資。相場分析力とリスク管理が重要。",
+        description: "為替やゴールド等の現物資産にレバレッジを掛けてトレードを行う。さるちゃんの方法では、24時間のトレードが可能。(難易度:中級～上級)<br>暗号資産運用については、2年間がチャンスタイム！投資したら放っておくだけなので、難易度は低。銘柄が気になる方はurlから応募してね。",
         income: "月1-100万円",
         timeRequired: "週5-15時間",
-        difficulty: "中級～上級",
+        difficulty: "初級～上級",
         category: "investment",
         url: "https://docs.google.com/forms/d/1_FyifOwLfQ3n-PHzRACPnAD-2jcszC3WIzEADsNJuGQ/edit",
-        hasLineGuide: false
+        hasLineGuide: false,
+        lineKeyword: "投資"
     },
     dropshipping: {
         title: "無在庫物販",
@@ -18,44 +19,49 @@ const jobDatabase = {
         difficulty: "初級～中級",
         category: "business",
         url: "https://docs.google.com/forms/d/1Zc521Sz-o2xQ-Vy7jGXFWb9N_E5VB4BGo4A3PF4YSl0/edit",
-        hasLineGuide: false
+        hasLineGuide: false,
+        lineKeyword: "無在庫物販"
     },
     lifePlanning: {
         title: "ライフプランニング",
-        description: "個人や家族の将来設計をサポート。保険や資産運用のアドバイスを提供。",
-        income: "月10-80万円",
+        description: "まずはあなたの稼ぐ力を養い0→1の稼げるのだという成功体験を積んで頂きます。それを通過点とし、その先の人生の充実を目指す。AIを用いて、さるちゃんが直接伴走して、稼ぐ～人生充実を目指します。1人1人と対話して手がけるあなただけけのオーダーメイド戦略。さるちゃんが直接設計しています。",
+        income: "月10万円〜",
         timeRequired: "週8-20時間",
         difficulty: "中級～上級",
         category: "business",
         url: "https://example.com/life-planning-info",
         hasLineGuide: true,
-        lineKeyword: "ライフプラン"
+        lineKeyword: "ライフプランニング"
     },
     ai: {
         title: "AI活用サービス",
-        description: "AI技術を活用したコンテンツ制作や業務効率化サービス。",
-        income: "月8-60万円",
+        description: "AIを活用した商品/コンテンツ販売サービス。",
+        income: "月5-60万円",
         timeRequired: "週10-30時間",
         difficulty: "中級～上級",
         category: "tech",
-        url: "https://example.com/ai-service-info",
-        hasLineGuide: true,
+        url: "https://jv-ad-asp.com/lp/214z/85up",
+        hasLineGuide: false,
         lineKeyword: "AI"
     },
     snsManagement: {
-        title: "SNS運用代行",
-        description: "企業や個人のSNSアカウント運用を代行。コンテンツ企画から投稿まで一貫してサポート。",
+        title: "SNS",
+        description: "個人での情報発信力を養うことはもちろん、企業のSNS運用代行やコンテンツ企画をサポートする力を養うことができる。",
         income: "月5-40万円",
         timeRequired: "週8-25時間",
         difficulty: "初級～中級",
         category: "lifestyle",
-        url: "https://example.com/sns-management-info",
-        hasLineGuide: true,
-        lineKeyword: "SNS運用"
+        url: "https://kaito-ss.com/882v/",
+        hasLineGuide: false,
+        lineKeyword: "SNS運用",
+        hasSNSGuide: true,
+        insta_url: "https://kaito-ss.com/882v/",
+        x_url: "https://kaito-ss.com/882v/",
+        hasLineGuide: false,
     },
     beauty: {
-        title: "美容関連サービス",
-        description: "美容コンサルティングやスキンケアアドバイス。オンラインでの美容相談や商品紹介。",
+        title: "美容サービス",
+        description: "美容商品の購入や代理店販売を通して、質の高い商品を使いながら代理店としてビジネスも行える。QOLの向上を目指せる。",
         income: "月3-30万円",
         timeRequired: "週5-20時間",
         difficulty: "初級～中級",
@@ -66,13 +72,13 @@ const jobDatabase = {
     },
     mnp: {
         title: "MNPサービス",
-        description: "携帯電話の乗り換え手続きを代行。キャリア間の料金比較や最適プラン提案も含む。",
+        description: "スマホの乗換えを通して収益を得るビジネスモデル。コンサル料は収益から支払うので、手出しが全くないバグ副業。興味があればその先の手配師や半年ごとに再び実施できる再現性が極めて高い。",
         income: "月5-25万円",
         timeRequired: "週10-20時間",
         difficulty: "初級",
         category: "business",
-        url: "https://example.com/mnp-service-info",
-        hasLineGuide: true,
+        url: "https://forms.gle/1xda9sRMKu8Mc2Lt7",
+        hasLineGuide: false,
         lineKeyword: "MNP"
     },
     programming: {
@@ -88,7 +94,7 @@ const jobDatabase = {
     },
     pointActivity: {
     title: "ポイ活",
-    description: "ポイントサイトやアプリを活用してポイントを貯める活動。アンケート回答や商品購入でポイント獲得。",
+    description: "",
     income: "月1-5万円",
     timeRequired: "週3-10時間",
     difficulty: "初級",
@@ -101,60 +107,119 @@ const jobDatabase = {
 
 // 診断ロジック
 function recommendJobs(answers) {
-    const recommendations = [];
+    const jobs = [];
     
-    // 興味分野に基づく基本推奨
+    // 各副業にスコアリングシステムを導入
+    const jobScores = {
+        fx: 0,
+        dropshipping: 0,
+        lifePlanning: 0,
+        ai: 0,
+        snsManagement: 0,
+        beauty: 0,
+        mnp: 0,
+        programming: 0,
+        pointActivity: 0
+    };
+    
+    // 興味分野による基本スコア（+3点）
     switch(answers.interest) {
         case 'investment':
-            recommendations.push('fx');
+            jobScores.fx += 3;
             break;
         case 'tech':
-            if (answers.skillLevel === 'advanced') {
-                recommendations.push('programming', 'ai');
-            } else {
-                recommendations.push('ai', 'programming');
-            }
+            jobScores.programming += 3;
+            jobScores.ai += 3;
             break;
         case 'business':
-            recommendations.push('lifePlanning', 'mnp', 'dropshipping');
+            jobScores.lifePlanning += 3;
+            jobScores.mnp += 3;
+            jobScores.dropshipping += 3;
             break;
         case 'lifestyle':
-            recommendations.push('snsManagement', 'beauty', 'pointActivity');
+            jobScores.snsManagement += 3;
+            jobScores.beauty += 3;
+            jobScores.pointActivity += 3;
             break;
     }
-
-    // スキルレベルによる調整
-    if (answers.skillLevel === 'beginner') {
-        recommendations.push('snsManagement', 'beauty', 'mnp', 'pointActivity');
-    } else if (answers.skillLevel === 'intermediate') {
-        recommendations.push('ai', 'dropshipping', 'lifePlanning');
-    } else if (answers.skillLevel === 'advanced') {
-        recommendations.push('programming', 'lifePlanning', 'fx');
+    
+    // スキルレベルによる調整（+2点）
+    switch(answers.skillLevel) {
+        case 'beginner':
+            jobScores.pointActivity += 2;
+            jobScores.snsManagement += 2;
+            jobScores.beauty += 2;
+            jobScores.mnp += 2;
+            break;
+        case 'intermediate':
+            jobScores.ai += 2;
+            jobScores.dropshipping += 2;
+            jobScores.lifePlanning += 2;
+            break;
+        case 'advanced':
+            jobScores.programming += 2;
+            jobScores.fx += 2;
+            jobScores.lifePlanning += 2;
+            break;
     }
-
-    // 時間による調整
-    if (answers.timeAvailable === '1hour') {
-        recommendations.push('fx', 'beauty', 'mnp');
-    } else if (answers.timeAvailable === '6hours+') {
-        recommendations.push('programming', 'ai', 'dropshipping', 'pointActivity');
+    
+    // 時間による調整（+2点）
+    switch(answers.timeAvailable) {
+        case '1hour':
+            jobScores.fx += 2;
+            jobScores.pointActivity += 2;
+            jobScores.beauty += 2;
+            break;
+        case '1-4hours':
+            jobScores.snsManagement += 2;
+            jobScores.mnp += 2;
+            jobScores.ai += 2;
+            break;
+        case '6hours+':
+            jobScores.programming += 2;
+            jobScores.dropshipping += 2;
+            jobScores.lifePlanning += 2;
+            break;
     }
-
-    // 収入目標による調整
-    if (answers.income === 'very-high' || answers.income === 'high') {
-        recommendations.push('programming', 'fx', 'lifePlanning');
-    } else if (answers.income === 'very-low') {
-        recommendations.push('beauty', 'mnp', 'snsManagement');
+    
+    // 収入目標による調整（+1点）
+    switch(answers.income) {
+        case 'very-low':
+            jobScores.pointActivity += 1;
+            jobScores.beauty += 1;
+            break;
+        case 'low':
+            jobScores.snsManagement += 1;
+            jobScores.mnp += 1;
+            break;
+        case 'medium':
+            jobScores.ai += 1;
+            jobScores.dropshipping += 1;
+            break;
+        case 'high':
+        case 'very-high':
+            jobScores.programming += 1;
+            jobScores.fx += 1;
+            jobScores.lifePlanning += 1;
+            break;
     }
-
-    // 勤務場所による調整
+    
+    // 働く場所による調整（+1点）
     if (answers.location === 'home') {
-        recommendations.push('ai', 'programming', 'fx', 'snsManagement');
+        jobScores.ai += 1;
+        jobScores.programming += 1;
+        jobScores.fx += 1;
+        jobScores.pointActivity += 1;
     } else if (answers.location === 'outside') {
-        recommendations.push('lifePlanning', 'mnp');
+        jobScores.lifePlanning += 1;
+        jobScores.mnp += 1;
     }
-
-    // 重複を削除し、最大3つまでに制限
-    return [...new Set(recommendations)].slice(0, 3);
+    
+    // スコア順にソートして上位3つを返す
+    return Object.entries(jobScores)
+        .sort(([,a], [,b]) => b - a)
+        .slice(0, 3)
+        .map(([job]) => job);
 }
 
 // UIコントロール
@@ -234,10 +299,27 @@ function displayResults() {
                 <div class="mt-4 pt-4 border-t border-gray-200">
                     <div class="space-y-3 md:text-center">
                         <p class="text-sm text-gray-700">
-                        公式LINEで「${job.lineKeyword}」と入力して<br class="sm:hidden">情報を取得する</p>
+                        興味がある方は、公式LINEから<br class="sm:hidden">「${job.lineKeyword}」とキーワードを送ってください。
                         <div class="text-center">
-                            <a href="https://line.me/R/ti/p/@example" target="_blank" class="inline-block bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">
+                            <a href="https://line.me/ti/p/C4G55cRHdD" target="_blank" class="inline-block bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">
                                 公式LINEはこちら
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (job.hasSNSGuide) {
+            // SNS案内がある場合：SNS案内のみ
+            bottomSectionHtml = `
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                    <div class="space-y-3">
+                        <p class="text-sm text-gray-600 mobile-text-adjust">詳細な情報と始め方を下記のボタンから確認</p>
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                            <a href="https://kaito-ss.com/882v/" target="_blank" class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-5 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md text-center">
+                                Instagramはこちら
+                            </a>
+                            <a href="https://page.theapps.jp/rf/i0Qk4nzbrypyUkiUnrPx1A==" target="_blank" class="inline-block bg-black hover:bg-gray-800 text-white px-5 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md text-center">
+                                Xはこちら
                             </a>
                         </div>
                     </div>
@@ -247,10 +329,9 @@ function displayResults() {
             // LINE案内がない場合：リンクボタンのみ
             bottomSectionHtml = `
                 <div class="mt-4 pt-4 border-t border-gray-200">
-                    <div class="flex flex-col md:flex-row md:items-center gap-3">
-                        <span class="text-sm text-gray-600 mobile-text-adjust">
+                    <div class="space-y-3 md:text-center">
+                        <p class="text-sm text-gray-600">
                             詳細な情報と始め方を下記のボタンから確認
-                        </span>
                         <div class="text-center">
                             <a href="${job.url}" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-normal transition-colors shadow-sm hover:shadow-md">
                                 無料で情報を取得する
